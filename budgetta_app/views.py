@@ -13,7 +13,11 @@ from budgetta_app.models import Transaction, Category
 def index(request):
     today = datetime.datetime.now()
     if request.user.is_authenticated:
-        category_by_sum = Transaction.objects.values('category','category__name','is_expense','category__limit').filter(owner=request.user,date__year=today.year, date__month=today.month).annotate(total_price=Sum('amount'))
+        category_by_sum = Transaction.objects.values('category', 'category__name', 'is_expense',
+                                                     'category__limit').filter(owner=request.user,
+                                                                               date__year=today.year,
+                                                                               date__month=today.month).annotate(
+            total_price=Sum('amount'))
         expense_list = []
 
         income_list = []
@@ -31,11 +35,12 @@ def index(request):
 
     return render(request, 'budgetta_app/index.html', context)
 
+
 @login_required
 def transactions(request):
     """show all transactions"""
     today = datetime.datetime.now()
-    transactions = Transaction.objects.filter(owner=request.user,date__year=today.year,
+    transactions = Transaction.objects.filter(owner=request.user, date__year=today.year,
                                               date__month=today.month).order_by('-date')
     expenses = []
     incomes = []
@@ -49,20 +54,22 @@ def transactions(request):
     context = {'expenses': expenses, 'incomes': incomes}
     return render(request, 'budgetta_app/transactions.html', context)
 
+
 @login_required
 def new_transaction(request):
     """add new transaction"""
     if request.method != 'POST':
-        form = TransactionForm()
+        form = TransactionForm(user=request.user)
     else:
         form = TransactionForm(data=request.POST)
         if form.is_valid():
-            new_transaction = form.save(commit=False)
-            new_transaction.owner = request.user
-            new_transaction.save()
+            transaction = form.save(commit=False)
+            transaction.owner = request.user
+            transaction.save()
             return redirect('budgetta_app:transactions')
     context = {'form': form}
     return render(request, 'budgetta_app/new_transaction.html', context)
+
 
 @login_required
 def categories(request):
@@ -70,6 +77,7 @@ def categories(request):
     categories = Category.objects.filter(owner=request.user).order_by('date')
     context = {'categories': categories}
     return render(request, 'budgetta_app/categories.html', context)
+
 
 @login_required
 def new_category(request):
@@ -86,10 +94,11 @@ def new_category(request):
     context = {'form': form}
     return render(request, 'budgetta_app/new_category.html', context)
 
+
 @login_required
 def edit_category(request, category_id):
     """edit category"""
-    category = Category.objects.get(id=category_id)
+    category = Category.objects.get(owner=request.user, id=category_id)
     if category.owner != request.user:
         raise Http404
     if request.method != 'POST':
