@@ -1,0 +1,12 @@
+{% extends "budgetta_app/base.html" %}
+
+{% block content %}
+<p>Add transaction:</p>
+
+<form action="{% url 'budgetta_app:new_transaction' %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">add</button>
+</form>
+
+{% endblock content %}

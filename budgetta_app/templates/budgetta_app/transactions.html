@@ -1,0 +1,75 @@
+{% extends "budgetta_app/base.html" %}
+
+
+{% block content %}
+<a href="{% url 'budgetta_app:new_transaction' %}">add transaction</a>
+
+<p>Expenses</p>
+
+<table border =1px>
+    <tr>
+        <th>name</th>
+        <th>category</th>
+        <th>amount</th>
+        <th>date</th>
+    </tr>
+    {% for expense in expenses %}
+    <tr>
+        <td>
+            {{ expense.name}}
+        </td>
+        <td>
+            {{ expense.category}}
+        </td>
+        <td>
+            {{ expense.amount}}
+        </td>
+        <td>
+            {{ expense.date}}
+        </td>
+    </tr>
+
+    {% empty %}
+    <tr>
+        <th>
+           No expense have been added yet.
+        </th>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>Income</p>
+
+<table border =1px>
+    <tr>
+        <th>name</th>
+        <th>category</th>
+        <th>amount</th>
+        <th>date</th>
+    </tr>
+    {% for income in incomes %}
+    <tr>
+        <td>
+            {{ income.name}}
+        </td>
+        <td>
+            {{ income.category}}
+        </td>
+        <td>
+            {{ income.amount}}
+        </td>
+        <td>
+            {{ income.date}}
+        </td>
+    </tr>
+
+    {% empty %}
+    <tr>
+        <th>
+           No income have been added yet.
+        </th>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}

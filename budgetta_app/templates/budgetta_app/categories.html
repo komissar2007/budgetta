@@ -1,0 +1,32 @@
+{% extends "budgetta_app/base.html" %}
+
+
+{% block content %}
+<a href="{% url 'budgetta_app:new_category' %}">add category</a>
+
+<p>Categroies</p>
+<table border=1px>
+    <tr>
+        <th>name</th>
+        <th>limit</th>
+    </tr>
+    {% for category in categories %}
+    <tr>
+        <td>
+          <a href="{% url 'budgetta_app:edit_category' category.id %}">{{ category.name}}</a>
+        </td>
+        <td>
+            {{ category.limit}}
+        </td>
+
+    </tr>
+    {% empty %}
+    <tr>
+    <td>
+       No categories have been added yet.
+    </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}

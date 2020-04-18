@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Budgetta - budget manager</title>
+</head>
+<body>
+<p>
+   {% if user.is_authenticated %}
+     Hello, {{ user.username }}.
+    <a href="{% url 'users:logout' %}">Log out</a>
+     {% else %}
+    <a href="{% url 'users:register' %}">Register</a>
+     <a href="{% url 'users:login' %}">Log in</a>
+     {% endif %}
+</p>
+<p>
+    <a href="{% url 'budgetta_app:index' %}">Budgetta</a>
+    <a href="{% url 'budgetta_app:transactions' %}">transactions</a>
+    <a href="{% url 'budgetta_app:categories' %}">categroies</a>
+</p>
+
+{% block content %}
+{% endblock content %}
+
+</body>
+</html>

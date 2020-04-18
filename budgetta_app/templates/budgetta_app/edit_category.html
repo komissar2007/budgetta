@@ -1,0 +1,14 @@
+{% extends "budgetta_app/base.html" %}
+
+{% block content %}
+
+<p>Edit category:</p>
+
+<form action="{% url 'budgetta_app:edit_category' category.id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="edit" value="submit">Save changes</button>
+    <button name="edit" value="delete">delete category</button>
+</form>
+
+{% endblock content %}

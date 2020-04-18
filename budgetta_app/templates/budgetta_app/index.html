@@ -1,0 +1,37 @@
+{% extends "budgetta_app/base.html" %}
+{% block content %}
+<p>Budgetta</p>
+
+{% if user.is_authenticated %}
+
+<p> expense:</p>
+<ul>
+    {% for expense in expense_list %}
+    <li>{{ expense.category__name}}</li>
+    <ul>
+        <li>total amount: {{ expense.total_price}}</li>
+        <li>limit: {{expense.category__limit}}</li>
+    </ul>
+    {% empty %}
+    <li>No expenses have been added yet.</li>
+    {% endfor %}
+</ul>
+
+<p> income:</p>
+<ul>
+    {% for income in income_list %}
+    <li>{{ income.category__name}}</li>
+    <ul>
+        <li>total amount: {{ income.total_price}}</li>
+        <li>limit: {{income.category__limit}}</li>
+    </ul>
+    {% empty %}
+    <li>No income have been added yet.</li>
+    {% endfor %}
+</ul>
+
+
+{% endif %}
+
+<p>Welcome to Budgetta manager</p>
+{% endblock content %}
