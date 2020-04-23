@@ -82,8 +82,8 @@ DATABASES = {
          'NAME': 'budgetta_db',
          'USER': 'budgetta_user',
          'PASSWORD': 'budgetta_password',
-         'HOST': 'localhost',
-         'PORT': '54320',
+         'HOST': os.getenv('DB_HOST',"localhost"),
+         'PORT': os.getenv('DB_PORT',"54320"),
      }
     #'default': {
     #    'ENGINE': 'django.db.backends.sqlite3',
