@@ -25,7 +25,7 @@ SECRET_KEY = 'g3-mo*$7%vi=_!l*^gqv-z+*wnn2b+u$@dg1$6-c40^3b%*&97'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG_MODE',True)
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS','localhost')
 
 
 # Application definition
