@@ -29,7 +29,6 @@ def index(request):
                 income_list.append(category)
 
         context = {'expense_list': expense_list, 'income_list': income_list}
-
     else:
         context = {}
 

@@ -1,11 +1,10 @@
 {% extends "budgetta_app/base.html" %}
-
+ {% block page_header %}
+     <h1>Transactions</h1>
+   {% endblock page_header %}
 
 {% block content %}
-<a href="{% url 'budgetta_app:new_transaction' %}">add transaction</a>
-
-<p>Expenses</p>
-
+<h5><a href="{% url 'budgetta_app:new_transaction' %}">add transaction</a></h5>
 <table border =1px>
     <tr>
         <th>name</th>

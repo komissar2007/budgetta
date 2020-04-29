@@ -1,10 +1,12 @@
 {% extends "budgetta_app/base.html" %}
 
+ {% block page_header %}
+     <h1>Categories</h1>
+   {% endblock page_header %}
 
 {% block content %}
-<a href="{% url 'budgetta_app:new_category' %}">add category</a>
+<h5><a href="{% url 'budgetta_app:new_category' %}">Add category</a></h5>
 
-<p>Categroies</p>
 <table border=1px>
     <tr>
         <th>name</th>

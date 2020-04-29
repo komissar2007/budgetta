@@ -16,31 +16,52 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-<p> expense:</p>
-<ul>
-    {% for expense in expense_list %}
-    <li>{{ expense.category__name}}</li>
-    <ul>
-        <li>total amount: {{ expense.total_price}}</li>
-        <li>limit: {{expense.category__limit}}</li>
-    </ul>
-    {% empty %}
-    <li>No expenses have been added yet.</li>
+<h3><p> expense:</p></h3>
+{% if expense_list|length > 0 %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Total amount</th>
+      <th scope="col">Limit</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for expense in expense_list %}
+    <tr>
+      <th scope="row">{{ expense.category__name}}</th>
+      <td>{{ expense.total_price}}</td>
+      <td>{{expense.category__limit}}</td>
+    </tr>
     {% endfor %}
-</ul>
-
-<p> income:</p>
-<ul>
-    {% for income in income_list %}
-    <li>{{ income.category__name}}</li>
-    <ul>
-        <li>total amount: {{ income.total_price}}</li>
-        <li>limit: {{income.category__limit}}</li>
-    </ul>
-    {% empty %}
-    <li>No income have been added yet.</li>
+  </tbody>
+</table>
+{% else %}
+<p>No expenses have been added yet.</p>
+{% endif %}
+<h3><p> income:</p></h3>
+{% if income_list|length > 0 %}
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Total amount</th>
+      <th scope="col">Limit</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for income in income_list %}
+    <tr>
+      <th scope="row">{{ income.category__name}}</th>
+      <td>{{ income.total_price}}</td>
+      <td>{{income.category__limit}}</td>
+    </tr>
     {% endfor %}
-</ul>
+  </tbody>
+</table>
+{% else %}
+<p>No income have been added yet.</p>
+{% endif %}
 
 {% endif %}
 {% endblock content %}
