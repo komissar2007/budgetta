@@ -1,7 +1,19 @@
 {% extends "budgetta_app/base.html" %}
-{% block content %}
-<p>Budgetta</p>
 
+{% block page_header %}
+{% if user.is_anonymous %}
+<div class="jumbotron">
+    <h1 class="display-3">Manage your budget</h1>
+
+    <p class="lead">manage your budget by tracking your expenses and finance transactions</p>
+
+    <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+       role="button">Register &raquo;</a>
+</div>
+{% endif %}
+{% endblock page_header %}
+
+{% block content %}
 {% if user.is_authenticated %}
 
 <p> expense:</p>
@@ -30,8 +42,5 @@
     {% endfor %}
 </ul>
 
-
 {% endif %}
-
-<p>Welcome to Budgetta manager</p>
 {% endblock content %}

@@ -25,7 +25,7 @@ SECRET_KEY = 'g3-mo*$7%vi=_!l*^gqv-z+*wnn2b+u$@dg1$6-c40^3b%*&97'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG_MODE',True)
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS','localhost')
+ALLOWED_HOSTS = [os.getenv('ALLOWED', 'localhost')]
 
 
 # Application definition
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     #MY_APP
     'budgetta_app',
     'users',
+    'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,7 +83,7 @@ DATABASES = {
          'NAME': 'budgetta_db',
          'USER': 'budgetta_user',
          'PASSWORD': 'budgetta_password',
-         'HOST': os.getenv('DB_HOST',"localhost"),
+         'HOST': os.getenv('DB_HOST','localhost'),
          'PORT': os.getenv('DB_PORT',"54320"),
      }
     #'default': {
