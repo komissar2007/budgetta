@@ -60,7 +60,7 @@ def new_transaction(request):
     if request.method != 'POST':
         form = TransactionForm(user=request.user)
     else:
-        form = TransactionForm(data=request.POST)
+        form = TransactionForm(user=request.user, data=request.POST)
         if form.is_valid():
             transaction = form.save(commit=False)
             transaction.owner = request.user
