@@ -1,5 +1,6 @@
 {% extends "budgetta_app/base.html" %}
-
+{% load bootstrap4 %}
+{% load django_template_maths %}
 {% block page_header %}
 {% if user.is_anonymous %}
 <div class="jumbotron">
@@ -19,22 +20,28 @@
 <h3><p> expense:</p></h3>
 {% if expense_list|length > 0 %}
 <table class="table">
-  <thead class="thead-dark">
+    <thead class="thead-dark">
     <tr>
-      <th scope="col">Category</th>
-      <th scope="col">Total amount</th>
-      <th scope="col">Limit</th>
+        <th scope="col" width="20%">Category</th>
+        <th scope="col" width="80%">Status</th>
     </tr>
-  </thead>
-  <tbody>
-  {% for expense in expense_list %}
+    </thead>
+    <tbody>
+    {% for expense in expense_list %}
     <tr>
-      <th scope="row">{{ expense.category__name}}</th>
-      <td>{{ expense.total_price}}</td>
-      <td>{{expense.category__limit}}</td>
+        <th scope="row" width="20%">{{ expense.category__name}}</th>
+        <td colspan="2" width="80%">
+            <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar"
+                     style="width: {{ expense.total_price|mul:100 |div:expense.category__limit}}%"
+                     aria-valuenow={{expense.total_price}} aria-valuemin="0" aria-valuemax={{expense.category__limit}}>
+                    {{ expense.total_price }} / {{ expense.category__limit }}
+                </div>
+            </div>
+        </td>
     </tr>
     {% endfor %}
-  </tbody>
+    </tbody>
 </table>
 {% else %}
 <p>No expenses have been added yet.</p>
@@ -42,22 +49,28 @@
 <h3><p> income:</p></h3>
 {% if income_list|length > 0 %}
 <table class="table">
-  <thead class="thead-dark">
+    <thead class="thead-dark">
     <tr>
-      <th scope="col">Category</th>
-      <th scope="col">Total amount</th>
-      <th scope="col">Limit</th>
+        <th scope="col" width="20%">Category</th>
+        <th scope="col" width="80%">Status</th>
     </tr>
-  </thead>
-  <tbody>
-  {% for income in income_list %}
+    </thead>
+    <tbody>
+    {% for income in income_list %}
     <tr>
-      <th scope="row">{{ income.category__name}}</th>
-      <td>{{ income.total_price}}</td>
-      <td>{{income.category__limit}}</td>
+        <th scope="row" width="20%">{{ income.category__name}}</th>
+        <td colspan="2" width="80%">
+            <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar"
+                     style="width: {{ income.total_price|mul:100 |div:income.category__limit}}%"
+                     aria-valuenow={{income.total_price}} aria-valuemin="0" aria-valuemax={{income.category__limit}}>{{
+                    income.total_price }} / {{ income.category__limit }}
+                </div>
+            </div>
+        </td>
     </tr>
     {% endfor %}
-  </tbody>
+    </tbody>
 </table>
 {% else %}
 <p>No income have been added yet.</p>

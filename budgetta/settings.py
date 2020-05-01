@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'budgetta_app',
     'users',
     'bootstrap4',
+    'django_template_maths',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
