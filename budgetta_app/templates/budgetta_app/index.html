@@ -63,8 +63,8 @@
             <div class="progress">
                 <div class="progress-bar bg-success" role="progressbar"
                      style="width: {{ income.total_price|mul:100 |div:income.category__limit}}%"
-                     aria-valuenow={{income.total_price}} aria-valuemin="0" aria-valuemax={{income.category__limit}}>{{
-                    income.total_price }} / {{ income.category__limit }}
+                     aria-valuenow={{income.total_price}} aria-valuemin="0" aria-valuemax={{income.category__limit}}>
+                    {{ income.total_price }} / {{ income.category__limit }}
                 </div>
             </div>
         </td>
