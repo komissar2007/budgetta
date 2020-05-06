@@ -41,6 +41,7 @@ def transactions(request):
     today = datetime.datetime.now()
     transactions = Transaction.objects.filter(owner=request.user, date__year=today.year,
                                               date__month=today.month).order_by('-date')
+    categories = Category.objects.filter(owner=request.user)
     expenses = []
     incomes = []
     for transaction in transactions:
@@ -50,7 +51,7 @@ def transactions(request):
         else:
             incomes.append(transaction)
 
-    context = {'expenses': expenses, 'incomes': incomes}
+    context = {'expenses': expenses, 'incomes': incomes, 'categories': categories}
     return render(request, 'budgetta_app/transactions.html', context)
 
 
@@ -68,6 +69,8 @@ def new_transaction(request):
             return redirect('budgetta_app:transactions')
     context = {'form': form}
     return render(request, 'budgetta_app/new_transaction.html', context)
+
+
 
 
 @login_required

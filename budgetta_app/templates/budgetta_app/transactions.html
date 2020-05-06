@@ -4,8 +4,17 @@
    {% endblock page_header %}
 
 {% block content %}
-<h5><a href="{% url 'budgetta_app:new_transaction' %}">add transaction</a></h5>
+
 <p>Expenses:</p>
+
+<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#expenseModal">
+  add expense
+</button>
+<div class="modal fade" id="expenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{% include 'budgetta_app/new_transaction_modal.html' with is_expense_val='on' %}
+</div>
+<br>
+<br>
 
 {% if expenses|length > 0 %}
 <table class="table">
@@ -34,6 +43,17 @@
 
 
 <p>Income:</p>
+
+  <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#incomeModal">
+  add income
+</button>
+<div class="modal fade" id="incomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{% include 'budgetta_app/new_transaction_modal.html' %}
+</div>
+<br>
+<br>
+
+
 
 {% if incomes|length > 0 %}
 <table class="table">
