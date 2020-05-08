@@ -16,12 +16,21 @@
                     <label for="amountText">amount</label>
                     <input name="amount" type="number" class="form-control" id="amountText">
                 </div>
-                <input name="is_expense" type="text" hidden="true" class="form-check-input" id="IseExpenseCheck" value={{ is_expense_val }}>
+                <input name="is_expense" type="text" hidden="true" class="form-check-input" id="IseExpenseCheck"
+                       value={{ is_expense_val }}>
                 <div class="form-group">
                     <label for="categoryText">category</label>
                     <select class="form-control" id="categoryText" name="category">
-                        {% for cat in categories %}
-                        <option value={{ cat.id }}>{{ cat.name }}</option>
+                        {% for category in categories %}
+                        {% if is_expense_val == "on" %}
+                            {% if category.is_expense %}
+                            <option value={{ category.id }}>{{ category.name }}</option>
+                            {% endif %}
+                        {% else %}
+                            {% if not category.is_expense %}
+                            <option value={{ category.id }}>{{ category.name }}</option>
+                            {% endif %}
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>

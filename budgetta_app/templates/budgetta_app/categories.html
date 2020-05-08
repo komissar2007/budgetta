@@ -5,7 +5,14 @@
    {% endblock page_header %}
 
 {% block content %}
-<h5><a href="{% url 'budgetta_app:new_category' %}">Add category</a></h5>
+<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#categoryModal">
+  add category
+</button>
+<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{% include 'budgetta_app/new_category_modal.html' %}
+</div>
+<br>
+<br>
 
 {% if categories|length > 0 %}
 <table class="table">
@@ -13,6 +20,7 @@
     <tr>
       <th scope="col">name</th>
       <th scope="col">limit</th>
+      <th scope="col">type</th>
     </tr>
   </thead>
   <tbody>
@@ -20,7 +28,13 @@
     <tr>
       <th scope="row"><a href="{% url 'budgetta_app:edit_category' category.id %}">{{ category.name}}</a></th>
       <td>{{ category.limit}}</td>
+      {% if category.is_expense %}
+        <td>expense</td>
+      {% else %}
+        <td>income</td>
+      {% endif %}
     </tr>
+
     {% endfor %}
   </tbody>
 </table>
