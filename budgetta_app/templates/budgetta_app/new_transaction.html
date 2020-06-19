@@ -3,7 +3,7 @@
 {% block content %}
 <p>Add transaction:</p>
 
-<form action="{% url 'budgetta_app:new_transaction' %}" method='post'>
+<form action="{% url 'budgetta_app:new_transaction' %}" autocomplete="off" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
     <button name="submit">add</button>

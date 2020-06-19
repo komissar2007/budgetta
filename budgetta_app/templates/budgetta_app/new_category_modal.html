@@ -9,12 +9,12 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="categoryName">name</label>
-                    <input name="name" type="text" class="form-control" id="categoryName"
+                    <input name="name" type="text" autocomplete="off" class="form-control" id="categoryName"
                            aria-describedby="transactionHelp">
                 </div>
                 <div class="form-group">
                     <label for="limitText">amount</label>
-                    <input name="limit" type="number" class="form-control" id="limitText">
+                    <input name="limit" type="number" autocomplete="off" class="form-control" id="limitText">
                 </div>
                 <div class="form-check">
                     <input name="is_expense" type="checkbox" class="form-check-input" id="IseExpenseCheck">

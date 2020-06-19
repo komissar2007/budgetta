@@ -77,7 +77,14 @@ def new_transaction(request):
 def categories(request):
     """show all categories"""
     categories = Category.objects.filter(owner=request.user).order_by('date')
-    context = {'categories': categories}
+    expense_sum = 0
+    income_sum = 0
+    for category in categories:
+        if (category.is_expense):
+            expense_sum+=category.limit
+        else:
+            income_sum+=category.limit
+    context = {'categories': categories, 'expense_sum': expense_sum, 'income_sum': income_sum}
     return render(request, 'budgetta_app/categories.html', context)
 
 
