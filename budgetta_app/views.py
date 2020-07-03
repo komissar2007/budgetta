@@ -1,26 +1,23 @@
 import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
+
 from django.http import Http404
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from budgetta_app.forms import TransactionForm, CategoryForm
 from budgetta_app.models import Transaction, Category
+from budgetta_app.utils import shared_utils
 
 
 def index(request):
-    today = datetime.datetime.now()
     if request.user.is_authenticated:
-        category_by_sum = Transaction.objects.values('category', 'category__name', 'is_expense',
-                                                     'category__limit').filter(owner=request.user,
-                                                                               date__year=today.year,
-                                                                               date__month=today.month).annotate(
-            total_price=Sum('amount'))
+        category_by_sum = shared_utils.get_category_by_sum(request.user)
         expense_list = []
-
         income_list = []
+        total_expenses = shared_utils.get_total_expenses(request.user)
+        expected_expenses = shared_utils.get_expected_expenses(request.user)
 
         for category in category_by_sum:
             if category['is_expense']:
@@ -28,7 +25,10 @@ def index(request):
             else:
                 income_list.append(category)
 
-        context = {'expense_list': expense_list, 'income_list': income_list}
+        context = {'expense_list': expense_list,
+                   'income_list': income_list,
+                   'total_expenses': total_expenses,
+                   'expected_expenses': expected_expenses}
     else:
         context = {}
 
@@ -51,7 +51,12 @@ def transactions(request):
         else:
             incomes.append(transaction)
 
-    context = {'expenses': expenses, 'incomes': incomes, 'categories': categories}
+    total_expenses = shared_utils.get_total_expenses(request.user)
+    expected_expenses = shared_utils.get_expected_expenses(request.user)
+
+    context = {'expenses': expenses, 'incomes': incomes, 'categories': categories,
+               'total_expenses': total_expenses,
+               'expected_expenses': expected_expenses}
     return render(request, 'budgetta_app/transactions.html', context)
 
 
@@ -67,7 +72,11 @@ def new_transaction(request):
             transaction.owner = request.user
             transaction.save()
             return redirect('budgetta_app:transactions')
-    context = {'form': form}
+    total_expenses = shared_utils.get_total_expenses(request.user)
+    expected_expenses = shared_utils.get_expected_expenses(request.user)
+    context = {'form': form,
+               'total_expenses': total_expenses,
+               'expected_expenses': expected_expenses}
     return render(request, 'budgetta_app/new_transaction.html', context)
 
 
@@ -84,7 +93,11 @@ def categories(request):
             expense_sum+=category.limit
         else:
             income_sum+=category.limit
-    context = {'categories': categories, 'expense_sum': expense_sum, 'income_sum': income_sum}
+    total_expenses = shared_utils.get_total_expenses(request.user)
+    expected_expenses = shared_utils.get_expected_expenses(request.user)
+    context = {'categories': categories, 'expense_sum': expense_sum, 'income_sum': income_sum,
+               'total_expenses': total_expenses,
+               'expected_expenses': expected_expenses}
     return render(request, 'budgetta_app/categories.html', context)
 
 
@@ -100,7 +113,11 @@ def new_category(request):
             new_category.owner = request.user
             new_category.save()
             return redirect('budgetta_app:categories')
-    context = {'form': form}
+    total_expenses = shared_utils.get_total_expenses(request.user)
+    expected_expenses = shared_utils.get_expected_expenses(request.user)
+    context = {'form': form,
+               'total_expenses': total_expenses,
+               'expected_expenses': expected_expenses}
     return render(request, 'budgetta_app/new_category.html', context)
 
 

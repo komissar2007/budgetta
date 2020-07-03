@@ -44,10 +44,24 @@
         </ul>
     </div>
 </nav>
+    {% if user.is_authenticated %}
+    <main role="main" class="container">
+        <div class="pb-2 mb-2 border-bottom">
+
+            <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar"
+                     style="width: {{ total_expenses.sum|mul:100 |div:expected_expenses.sum}}%"
+                     aria-valuenow={{total_expenses.sum}} aria-valuemin="0" aria-valuemax={{expected_expenses.sum}}>
+                    {{ total_expenses.sum }} / {{ expected_expenses.sum }}
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endif %}
    <main role="main" class="container">
      <div class="pb-2 mb-2 border-bottom">
          {% block page_header %}{% endblock page_header %}
-       </div>
+     </div>
      <div>
          {% block content %}{% endblock content %}
        </div>
