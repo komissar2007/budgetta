@@ -1,5 +1,6 @@
 {% load bootstrap4 %}
 {% load django_template_maths %}
+{% load filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,8 +50,8 @@
         <div class="pb-2 mb-2 border-bottom">
 
             <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar"
-                     style="width: {{ total_expenses.sum|mul:100 |div:expected_expenses.sum}}%"
+                <div class="{{ total_expenses.sum|mul:100 |div:expected_expenses.sum | get_progress_status }}" role="progressbar"
+                     style="width: {{ total_expenses.sum|mul:100 |div:expected_expenses.sum }}%"
                      aria-valuenow={{total_expenses.sum}} aria-valuemin="0" aria-valuemax={{expected_expenses.sum}}>
                     {{ total_expenses.sum }} / {{ expected_expenses.sum }}
                 </div>

@@ -1,6 +1,8 @@
 {% extends "budgetta_app/base.html" %}
 {% load bootstrap4 %}
 {% load django_template_maths %}
+{% load filters %}
+
 {% block page_header %}
 {% if user.is_anonymous %}
 <div class="jumbotron">
@@ -32,7 +34,7 @@
         <th scope="row" width="20%">{{ expense.category__name}}</th>
         <td colspan="2" width="80%">
             <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar"
+                <div class=" {{ expense.total_price|mul:100 |div:expense.category__limit | get_progress_status }} "  role="progressbar"
                      style="width: {{ expense.total_price|mul:100 |div:expense.category__limit}}%"
                      aria-valuenow={{expense.total_price}} aria-valuemin="0" aria-valuemax={{expense.category__limit}}>
                     {{ expense.total_price }} / {{ expense.category__limit }}
@@ -61,7 +63,7 @@
         <th scope="row" width="20%">{{ income.category__name}}</th>
         <td colspan="2" width="80%">
             <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar"
+                <div class="{{ income.total_price|mul:100 |div:income.category__limit | get_progress_status }}" role="progressbar"
                      style="width: {{ income.total_price|mul:100 |div:income.category__limit}}%"
                      aria-valuenow={{income.total_price}} aria-valuemin="0" aria-valuemax={{income.category__limit}}>
                     {{ income.total_price }} / {{ income.category__limit }}
@@ -78,3 +80,5 @@
 
 {% endif %}
 {% endblock content %}
+
+
