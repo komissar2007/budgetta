@@ -79,6 +79,27 @@ def new_transaction(request):
                'expected_expenses': expected_expenses}
     return render(request, 'budgetta_app/new_transaction.html', context)
 
+def edit_transaction(request, transaction_id):
+    """edit transaction"""
+    transaction = Transaction.objects.get(owner=request.user, id=transaction_id)
+    if request.method != 'POST':
+        form = TransactionForm(instance=transaction, user=request.user)
+    elif request.POST['edit'] == 'submit':
+        form = TransactionForm(instance=transaction, data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('budgetta_app:transactions')
+    elif request.POST['edit'] == 'delete':
+        transaction.delete()
+        return redirect('budgetta_app:transactions')
+    total_expenses = shared_utils.get_total_expenses(request.user)
+    expected_expenses = shared_utils.get_expected_expenses(request.user)
+    context = {'transaction': transaction, 'form': form,
+               'total_expenses': total_expenses,
+               'expected_expenses': expected_expenses}
+    return render(request, 'budgetta_app/edit_transaction.html', context)
+
+
 
 
 
@@ -137,5 +158,9 @@ def edit_category(request, category_id):
     elif request.POST['edit'] == 'delete':
         category.delete()
         return redirect('budgetta_app:categories')
-    context = {'category': category, 'form': form}
+    total_expenses = shared_utils.get_total_expenses(request.user)
+    expected_expenses = shared_utils.get_expected_expenses(request.user)
+    context = {'category': category, 'form': form,
+               'total_expenses': total_expenses,
+               'expected_expenses': expected_expenses}
     return render(request, 'budgetta_app/edit_category.html', context)

@@ -11,4 +11,5 @@ urlpatterns = [
     path('categories/', views.categories, name='categories'),
     path('new_categroy/', views.new_category, name='new_category'),
     path('edit_category/<int:category_id>/', views.edit_category, name='edit_category'),
+    path('edit_transaction/<int:transaction_id>/', views.edit_transaction, name='edit_transaction'),
 ]

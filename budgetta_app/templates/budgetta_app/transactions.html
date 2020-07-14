@@ -1,4 +1,5 @@
 {% extends "budgetta_app/base.html" %}
+
 {% block page_header %}
 <h1>Transactions</h1>
 {% endblock page_header %}
@@ -15,26 +16,30 @@
 <br>
 
 {% if expenses|length > 0 %}
-<table class="table">
+<div class="table-sort" style="display: block;height: 300px; overflow-y: auto">
+<table class="table-sort" data-toggle="table" data-mobile-responsive="true">
   <thead class="thead-light">
     <tr>
-      <th scope="col">name</th>
-      <th scope="col">category</th>
-      <th scope="col">amount</th>
-      <th scope="col">date</th>
+      <th data-field="name"  scope="col" >name</th>
+      <th data-field="category" data-sortable="true" scope="col" scope="col">category</th>
+      <th data-field="amount" data-sortable="true" scope="col">amount</th>
+      <th data-field="date" data-sortable="true" scope="col">date</th>
     </tr>
   </thead>
-  <tbody>
+
+  <tbody >
   {% for expense in expenses %}
     <tr>
-      <th scope="row">{{ expense.name}}</th>
-      <td>{{ expense.category}}</td>
-      <td>{{ expense.amount}}</td>
-      <td>{{ expense.date}}</td>
+      <th scope="row"><a href="{% url 'budgetta_app:edit_transaction' expense.id %}">{{ expense.name }}</a></th>
+      <td>{{ expense.category }}</td>
+      <td>{{ expense.amount }}</td>
+      <td>{{ expense.date }}</td>
     </tr>
     {% endfor %}
   </tbody>
+
 </table>
+</div>
     {% else %}
     <p>No expense transactions have been added yet.</p>
     {% endif %}
@@ -54,19 +59,20 @@
 
 
 {% if incomes|length > 0 %}
-<table class="table">
+<div class="table-sort" style="display: block;height: 300px; overflow-y: auto">
+<table class="table-sort"  data-toggle="table" data-mobile-responsive="true">
   <thead class="thead-light">
     <tr>
-      <th scope="col">name</th>
-      <th scope="col">category</th>
-      <th scope="col">amount</th>
-      <th scope="col">date</th>
+      <th data-field="name" scope="col">name</th>
+      <th data-field="category" data-sortable="true" scope="col">category</th>
+      <th data-field="amount" data-sortable="true" scope="col">amount</th>
+      <th data-field="date" data-sortable="true" scope="col">date</th>
     </tr>
   </thead>
   <tbody>
   {% for income in incomes %}
     <tr>
-      <th scope="row">{{ income.name}}</th>
+      <th scope="row"><a href="{% url 'budgetta_app:edit_transaction' income.id %}">{{ income.name }}</a></th>
       <td>{{ income.category}}</td>
       <td>{{ income.amount}}</td>
       <td>{{ income.date}}</td>
@@ -74,6 +80,7 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
     {% else %}
     <p>No income transactions have been added yet.</p>
     {% endif %}

@@ -1,4 +1,6 @@
 {% load bootstrap4 %}
+{% load static %}
+
 {% load django_template_maths %}
 {% load filters %}
 <!DOCTYPE html>
@@ -8,9 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,
        shrink-to-fit=no">
     <title>Budgetta - budget manager</title>
-
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
+    <link rel="stylesheet" href="{% block stylesheet %}{% static "budgetta_app/css/style.css" %}{% endblock %}">
+    <script src="{% static "budgetta_app/js/bs-table.js" %}"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table-locale-all.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">

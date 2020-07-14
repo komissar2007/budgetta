@@ -14,18 +14,19 @@
 <p> expected expense: {{ expense_sum }}</p>
 <p>expected income: {{ income_sum }} </p>
 {% if categories|length > 0 %}
-<table class="table">
+<div class="table-sort" style="overflow: auto; height: 350px;">
+<table class="table" class="table-sort" data-toggle="table" data-mobile-responsive="true">
   <thead class="thead-light">
     <tr>
-      <th scope="col">name</th>
-      <th scope="col">limit</th>
-      <th scope="col">type</th>
+      <th data-field="name"  scope="col">name</th>
+      <th data-field="limit" data-sortable="true" scope="col">limit</th>
+      <th data-field="type" data-sortable="true" scope="col">type</th>
     </tr>
   </thead>
   <tbody>
   {% for category in categories %}
     <tr>
-      <th scope="row"><a href="{% url 'budgetta_app:edit_category' category.id %}">{{ category.name}}</a></th>
+      <th scope="row"><a href="{% url 'budgetta_app:edit_category' category.id %}">{{ category.name }}</a></th>
       <td>{{ category.limit}}</td>
       {% if category.is_expense %}
         <td>expense</td>
@@ -37,6 +38,7 @@
     {% endfor %}
   </tbody>
 </table>
+</div>
 {% else %}
 <p>No categories have been added yet.</p>
 {% endif %}
