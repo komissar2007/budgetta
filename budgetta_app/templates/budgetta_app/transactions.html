@@ -12,6 +12,15 @@
 <div class="modal fade" id="expenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 {% include 'budgetta_app/new_transaction_modal.html' with is_expense_val='on' %}
 </div>
+
+<div class="modal fade" id="editExpenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{% include 'budgetta_app/edit_transaction_modal.html' with is_expense_val='on' %}
+</div>
+
+<div class="modal fade" id="editIncomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{% include 'budgetta_app/edit_transaction_modal.html' with is_expense_val='off' %}
+</div>
+
 <br>
 <br>
 
@@ -27,10 +36,11 @@
     </tr>
   </thead>
 
+
   <tbody >
   {% for expense in expenses %}
     <tr>
-      <th scope="row"><a href="{% url 'budgetta_app:edit_transaction' expense.id %}">{{ expense.name }}</a></th>
+      <th scope="row"><a href="#" onclick="javascript:showExpense('{{ expense.name }}', '{{ expense.amount }}', '{{ expense.category_id }}', '{{ expense.id }}')">{{ expense.name }}</a></th>
       <td>{{ expense.category }}</td>
       <td>{{ expense.amount }}</td>
       <td>{{ expense.date }}</td>
@@ -72,7 +82,7 @@
   <tbody>
   {% for income in incomes %}
     <tr>
-      <th scope="row"><a href="{% url 'budgetta_app:edit_transaction' income.id %}">{{ income.name }}</a></th>
+      <th scope="row"><a href="#" onclick="javascript:showIncome('{{ income.name }}', '{{ income.amount }}', '{{ income.category_id }}', '{{ income.id }}')">{{ income.name }}</a></th>
       <td>{{ income.category}}</td>
       <td>{{ income.amount}}</td>
       <td>{{ income.date}}</td>

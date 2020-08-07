@@ -99,6 +99,20 @@ def edit_transaction(request, transaction_id):
                'expected_expenses': expected_expenses}
     return render(request, 'budgetta_app/edit_transaction.html', context)
 
+def edit_transaction_modal(request):
+    """edit transaction from modal"""
+    transaction_id = request.POST['transaction']
+    transaction = Transaction.objects.get(owner=request.user, id=transaction_id)
+    if request.POST['edit'] == 'delete':
+        transaction.delete()
+        return redirect('budgetta_app:transactions')
+    if request.POST['edit'] == 'submit':
+        form = TransactionForm(instance=transaction, data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('budgetta_app:transactions')
+    return redirect('budgetta_app:transactions')
+
 
 
 
